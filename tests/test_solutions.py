@@ -7,7 +7,7 @@ import pytest
 @pytest.mark.parametrize(
     "day, part1, part2",
     [
-        (1, NotImplemented, NotImplemented),
+        (1, 2367773, 21271939),
         (2, NotImplemented, NotImplemented),
         (3, NotImplemented, NotImplemented),
         (4, NotImplemented, NotImplemented),
