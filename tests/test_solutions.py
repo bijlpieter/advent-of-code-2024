@@ -8,7 +8,7 @@ import pytest
     "day, part1, part2",
     [
         (1, 2367773, 21271939),
-        (2, NotImplemented, NotImplemented),
+        (2, 287, 354),
         (3, NotImplemented, NotImplemented),
         (4, NotImplemented, NotImplemented),
         (5, NotImplemented, NotImplemented),
