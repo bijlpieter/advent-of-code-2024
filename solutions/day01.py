@@ -7,12 +7,10 @@ def parser(input: str) -> tuple[list[int], list[int]]:
     return tuple(zip(*pairs))
 
 
-def part1(input: str) -> int:
-    col1, col2 = parser(input)
+def part1(col1: list[int], col2: list[int]) -> int:
     return sum(abs(left - right) for left, right in zip(sorted(col1), sorted(col2)))
 
 
-def part2(input: str) -> int:
-    col1, col2 = parser(input)
+def part2(col1: list[int], col2: list[int]) -> int:
     counter = Counter(col2)
     return sum(val * counter.get(val, 0) for val in col1)

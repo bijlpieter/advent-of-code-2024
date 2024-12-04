@@ -30,11 +30,11 @@ def get_input(day: int) -> str:
 
 
 def run_part(
-    part: Callable[[str], int | NotImplementedType], txt: str
+    part: Callable[[str], int | NotImplementedType], *args
 ) -> tuple[str, timedelta]:
     start = time.perf_counter()
     try:
-        out = part(txt)
+        out = part(*args)
         end = time.perf_counter()
         return str(out), timedelta(seconds=end - start)
     except Exception as exc:
@@ -50,7 +50,8 @@ def run_parts(
 ]:
     txt = get_input(day)
     sol = importlib.import_module(f"solutions.day{day:0>2}")
-    return partial(run_part, sol.part1, txt), partial(run_part, sol.part2, txt)
+    input = sol.parser(txt) if hasattr(sol, "parser") else [txt]
+    return partial(run_part, sol.part1, *input), partial(run_part, sol.part2, *input)
 
 
 def run_day(day: int):

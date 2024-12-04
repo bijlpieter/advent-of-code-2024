@@ -1,8 +1,8 @@
 from itertools import pairwise
 
 
-def parser(input: str) -> list[list[int]]:
-    return [list(map(int, row.split(" "))) for row in input.split("\n")]
+def parser(input: str) -> list[list[list[int]]]:
+    return [[list(map(int, row.split(" "))) for row in input.split("\n")]]
 
 
 def is_safe(report: list[int]) -> bool:
@@ -20,13 +20,11 @@ def problem_dampener(report: list[int]) -> list[list[int]]:
     ]
 
 
-def part1(input: str) -> int:
-    reports = parser(input)
+def part1(reports: list[list[int]]) -> int:
     return sum(map(is_safe, reports))
 
 
-def part2(input: str) -> int:
-    reports = parser(input)
+def part2(reports: list[list[int]]) -> int:
     return sum(
         any(is_safe(dampened) for dampened in problem_dampener(report))
         for report in reports
