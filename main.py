@@ -5,6 +5,7 @@ from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from datetime import datetime, timedelta
 from functools import partial
+from inspect import signature
 from pathlib import Path
 from types import NotImplementedType
 
@@ -30,11 +31,15 @@ def get_input(day: int) -> str:
 
 
 def run_part(
-    part: Callable[[str], int | NotImplementedType], *args
+    part: Callable[[str], int | NotImplementedType], input
 ) -> tuple[str, timedelta]:
+    sig = signature(part)
+    if len(sig.parameters) == 1:
+        input = [input]
+
     start = time.perf_counter()
     try:
-        out = part(*args)
+        out = part(*input)
         end = time.perf_counter()
         return str(out), timedelta(seconds=end - start)
     except Exception as exc:
@@ -50,8 +55,8 @@ def run_parts(
 ]:
     txt = get_input(day)
     sol = importlib.import_module(f"solutions.day{day:0>2}")
-    input = sol.parser(txt) if hasattr(sol, "parser") else [txt]
-    return partial(run_part, sol.part1, *input), partial(run_part, sol.part2, *input)
+    input = sol.parser(txt) if hasattr(sol, "parser") else txt
+    return partial(run_part, sol.part1, input), partial(run_part, sol.part2, input)
 
 
 def run_day(day: int):

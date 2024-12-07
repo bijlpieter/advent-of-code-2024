@@ -1,8 +1,8 @@
 from itertools import pairwise
 
 
-def parser(input: str) -> list[list[list[int]]]:
-    return [[list(map(int, row.split(" "))) for row in input.split("\n")]]
+def parser(input: str) -> list[list[int]]:
+    return [list(map(int, row.split(" "))) for row in input.split("\n")]
 
 
 def is_safe(report: list[int]) -> bool:
