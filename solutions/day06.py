@@ -40,8 +40,8 @@ class Lab:
         return False, visited
 
 
-def parser(input: str) -> list[Lab]:
-    return [Lab(input)]
+def parser(input: str) -> Lab:
+    return Lab(input)
 
 
 def part1(lab: Lab) -> int:
