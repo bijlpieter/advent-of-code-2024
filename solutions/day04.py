@@ -1,8 +1,8 @@
 from collections.abc import Generator, Sequence
 
 
-def parser(input: str) -> list[list[str]]:
-    return [input.split("\n")]
+def parser(input: str) -> list[str]:
+    return input.split("\n")
 
 
 def shape(grid: Sequence[Sequence]) -> tuple[int, int]:
