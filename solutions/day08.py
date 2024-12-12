@@ -26,20 +26,29 @@ class Roof:
         nodes = [(r1 - dr, c1 - dc), (r2 + dr, c2 + dc)]
         return [(r, c) for r, c in nodes if 0 <= r < h and 0 <= c < w]
 
-    def yield_while_in_range(
+    def yield_line(
         self, start: tuple[int, int], delta: tuple[int, int]
     ) -> Generator[tuple[int, int]]:
+        h, w = self.shape
         r, c = start
-        while (r, c):
-            pass
+        dr, dc = delta
+
+        while 0 <= r < h and 0 <= c < w:
+            yield r, c
+            r, c = r + dr, c + dc
+
+        r, c = start
+        while 0 <= r < h and 0 <= c < w:
+            yield r, c
+            r, c = r - dr, c - dc
 
     def resonance(
         self, one: tuple[int, int], two: tuple[int, int]
     ) -> list[tuple[int, int]]:
-        h, w = self.shape
         r1, c1 = one
         r2, c2 = two
         dr, dc = Fraction(r2 - r1, c2 - c1).as_integer_ratio()
+        return list(self.yield_line((r1, c1), (dr, dc)))
 
     def solver(
         self,
@@ -63,5 +72,5 @@ def part1(roof: Roof) -> int:
     return roof.solver(roof.antinodes)
 
 
-def part2(input: str) -> int:
-    return NotImplemented
+def part2(roof: Roof) -> int:
+    return roof.solver(roof.resonance)
