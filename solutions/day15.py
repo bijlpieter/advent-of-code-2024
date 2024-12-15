@@ -39,34 +39,28 @@ class Warehouse:
 
     def move(self, moving: str, r: int, c: int, dr: int, dc: int) -> None:
         curr = self.warehouse[r][c]
-        if curr == ".":
-            self.warehouse[r][c] = moving
+
         if curr == "O":
             self.move(curr, r + dr, c + dc, dr, dc)
-            self.warehouse[r][c] = moving
+
         if curr in "[]":
-            d, other = (1, "]") if curr == "[" else (-1, "[")
             self.move(curr, r + dr, c + dc, dr, dc)
-            self.move(other, r + dr, c + dc + d, dr, dc) if dr else True
-            self.warehouse[r][c] = moving
             if dr:
+                d, other = (1, "]") if curr == "[" else (-1, "[")
+                self.move(other, r + dr, c + dc + d, dr, dc)
                 self.warehouse[r][c + d] = "."
 
-    def draw(self) -> None:
-        print("\n".join("".join(row) for row in self.warehouse))
+        self.warehouse[r][c] = moving
 
     def simulate(self) -> None:
         d = {">": (0, 1), "<": (0, -1), "^": (-1, 0), "v": (1, 0)}
         r, c = self.robot
         for move in self.moves:
-            # self.draw()
-            # print(move)
             dr, dc = d[move]
             if self.can_push(r + dr, c + dc, dr, dc):
                 self.move("@", r + dr, c + dc, dr, dc)
                 self.warehouse[r][c] = "."
                 r, c = r + dr, c + dc
-        # self.draw()
 
     def gps_coordinates(self) -> list[int]:
         return [
