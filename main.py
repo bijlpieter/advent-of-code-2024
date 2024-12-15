@@ -3,6 +3,7 @@ import sys
 import time
 from collections.abc import Callable
 from concurrent.futures import ProcessPoolExecutor, as_completed
+from copy import deepcopy
 from datetime import datetime, timedelta
 from functools import partial
 from inspect import signature
@@ -55,8 +56,9 @@ def run_parts(
 ]:
     txt = get_input(day)
     sol = importlib.import_module(f"solutions.day{day:0>2}")
-    input = sol.parser(txt) if hasattr(sol, "parser") else txt
-    return partial(run_part, sol.part1, input), partial(run_part, sol.part2, input)
+    i1 = sol.parser(txt) if hasattr(sol, "parser") else txt
+    i2 = deepcopy(i1)
+    return partial(run_part, sol.part1, i1), partial(run_part, sol.part2, i2)
 
 
 def run_day(day: int):
